@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10110f" />
+  <meta name="description" content="MediaGrab Web 是一款简洁易用的网页媒体下载工具。请仅下载你有权保存的内容。" />
+  <title>媒体下载助手 - 视频链接解析与下载</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="媒体下载助手首页">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>媒体下载助手</span>
+      </a>
+      <div class="topbar-right">
+        <span class="status-dot"><i></i> 服务就绪</span>
+        <span class="version">本地运行</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy reveal reveal-1">
+          <p class="kicker"><span></span> 便携媒体工作台</p>
+          <h1>粘贴链接，<em>保存精彩。</em></h1>
+          <p class="hero-intro">粘贴公开链接，选择格式，保存你想留住的内容。没有弹窗迷宫，下载文件直接交到你手中。</p>
+        </div>
+        <div class="hero-aside reveal reveal-2">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="hero-aside-label">覆盖常见媒体平台</div>
+          <div class="hero-aside-big">1800<span>+</span></div>
+          <div class="hero-aside-caption">个站点可解析<br>解析能力由本地服务提供</div>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="main-column">
+          <section class="download-card panel reveal reveal-3" aria-labelledby="download-heading">
+            <div class="panel-heading">
+              <div>
+                <span class="section-index">A / 01</span>
+                <h2 id="download-heading">粘贴视频链接</h2>
+              </div>
+              <span class="panel-note">仅支持公开链接</span>
+            </div>
+            <form id="inspect-form" class="url-form">
+              <label class="sr-only" for="url-input">媒体链接</label>
+              <div class="input-wrap">
+                <span class="input-prefix">↳</span>
+                <input id="url-input" name="url" type="url" autocomplete="url" placeholder="https://…" required />
+                <button class="paste-button" type="button" id="paste-button">粘贴</button>
+              </div>
+              <button class="primary-button" type="submit" id="inspect-button">
+                <span>解析链接</span><span class="button-arrow">↗</span>
+              </button>
+            </form>
+            <div class="site-chips" aria-label="支持的网站示例">
+              <button type="button" data-example="https://www.youtube.com/watch?v=aqz-KE-bpKQ">YouTube</button>
+              <button type="button" data-example="https://x.com">X / Twitter</button>
+              <button type="button" data-example="https://www.instagram.com">Instagram</button>
+              <button type="button" data-example="https://www.tiktok.com">TikTok</button>
+              <span class="chip-more">支持更多网站</span>
+            </div>
+            <p class="form-feedback" id="form-feedback" role="status"></p>
+          </section>
+
+          <section class="media-card panel hidden" id="media-card" aria-live="polite">
+            <div class="media-header">
+              <div class="thumbnail-wrap">
+                <img id="media-thumbnail" alt="" />
+                <span class="thumbnail-badge" id="media-extractor">WEB</span>
+              </div>
+              <div class="media-meta">
+                <span class="section-index">解析结果</span>
+                <h2 id="media-title">未命名媒体</h2>
+                <div class="media-subline"><span id="media-uploader">未知创作者</span><span class="dot-separator">•</span><span id="media-duration">—</span></div>
+              </div>
+              <button class="icon-button" id="reset-button" type="button" aria-label="解析其他链接">×</button>
+            </div>
+
+            <div class="mode-toggle" role="tablist" aria-label="下载模式">
+              <button class="mode-button active" type="button" data-mode="video" role="tab" aria-selected="true">视频</button>
+              <button class="mode-button" type="button" data-mode="audio" role="tab" aria-selected="false">音频 / MP3</button>
+            </div>
+
+            <div class="format-heading"><span>选择清晰度</span><span id="format-count">—</span></div>
+            <div class="format-grid" id="format-grid"></div>
+
+            <div class="download-action-row">
+              <button class="primary-button wide" type="button" id="download-button"><span>开始下载</span><span class="button-arrow">↓</span></button>
+              <span class="legal-note">请仅下载你有权保存的媒体内容。</span>
+            </div>
+          </section>
+
+          <section class="progress-card panel hidden" id="progress-card" aria-live="polite">
+            <div class="progress-topline"><span class="section-index">下载进度</span><span id="progress-percent">0%</span></div>
+            <div class="progress-title-row"><h2 id="progress-title">正在准备文件</h2><span class="pulse-mark"></span></div>
+            <div class="progress-track"><span id="progress-bar"></span></div>
+            <div class="progress-details"><span id="progress-message">正在启动下载器…</span><span id="progress-format">—</span></div>
+            <div class="complete-actions hidden" id="complete-actions">
+              <a class="primary-button wide" id="save-file-button" href="#"><span>保存文件</span><span class="button-arrow">↗</span></a>
+              <button class="secondary-button" id="new-download-button" type="button">再下载一个</button>
+            </div>
+          </section>
+        </div>
+
+        <aside class="side-column">
+          <section class="side-panel reveal reveal-4">
+            <div class="side-heading"><span class="section-index">B / 使用指南</span><span class="live-line"></span></div>
+            <h3>简单三步，<br>轻松下载。</h3>
+            <p class="side-copy">MediaGrab 让下载流程更简单：先解析，再选择，最后保存。</p>
+            <ol class="steps">
+              <li><span>01</span><div><strong>粘贴</strong><small>输入公开媒体链接。</small></div></li>
+              <li><span>02</span><div><strong>选择</strong><small>选择视频清晰度或 MP3 音频。</small></div></li>
+              <li><span>03</span><div><strong>保存</strong><small>将文件保存到本地。</small></div></li>
+            </ol>
+          </section>
+          <section class="history-panel side-panel reveal reveal-5">
+            <div class="side-heading"><span class="section-index">最近下载</span><button class="clear-history" id="clear-history" type="button">清空</button></div>
+            <div class="history-list" id="history-list"><p class="empty-history">最近下载的内容会显示在这里。</p></div>
+          </section>
+          <div class="side-footnote reveal reveal-5"><span class="mini-star">✳</span><span>下载任务由本地服务处理。<br>解析与下载由本地服务完成。</span></div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer"><span>媒体下载助手</span><span>解析与下载由本地服务完成。</span></footer>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
+
